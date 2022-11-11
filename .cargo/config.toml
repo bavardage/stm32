@@ -9,6 +9,10 @@
 # runner = "gdb-multiarch -q -x openocd.gdb"
 # runner = "gdb -q -x openocd.gdb"
 
+# Uncomment this option to make `cargo run` flash your code using `probe-run`
+# from knurling-rs.
+runner = "probe-run --chip STM32H743ZITx"
+
 rustflags = [
   # This is needed if your flash or ram addresses are not aligned to 0x10000 in memory.x
   # See https://github.com/rust-embedded/cortex-m-quickstart/pull/95
@@ -16,6 +20,9 @@ rustflags = [
 
   # LLD (shipped with the Rust toolchain) is used as the default linker
   "-C", "link-arg=-Tlink.x",
+
+  # Include the defmt.x linker script from knurling-rs.
+  # "-C", "link-arg=-Tdefmt.x",
 
   # if you run into problems with LLD switch to the GNU linker by commenting out
   # this line
@@ -32,9 +39,9 @@ rustflags = [
 [build]
 # Pick ONE of these compilation targets
 # target = "thumbv6m-none-eabi"        # Cortex-M0 and Cortex-M0+
-target = "thumbv7m-none-eabi"        # Cortex-M3
+# target = "thumbv7m-none-eabi"        # Cortex-M3
 # target = "thumbv7em-none-eabi"       # Cortex-M4 and Cortex-M7 (no FPU)
-# target = "thumbv7em-none-eabihf"     # Cortex-M4F and Cortex-M7F (with FPU)
+target = "thumbv7em-none-eabihf"     # Cortex-M4F and Cortex-M7F (with FPU)
 # target = "thumbv8m.base-none-eabi"   # Cortex-M23
 # target = "thumbv8m.main-none-eabi"   # Cortex-M33 (no FPU)
 # target = "thumbv8m.main-none-eabihf" # Cortex-M33 (with FPU)
